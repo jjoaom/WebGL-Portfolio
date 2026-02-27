@@ -1,4 +1,9 @@
-# 💻 Portfólio Profissional
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![Threejs](https://img.shields.io/badge/threejs-black?style=for-the-badge&logo=three.js&logoColor=white)
+
+# Portfólio Profissional - WebGl
+
 
 Website de portfólio profissional desenvolvido para a disciplina **Laboratório de Desenvolvimento de Software – Engenharia de Software (PUC Minas)**.
 
@@ -10,10 +15,8 @@ O objetivo do projeto é apresentar minha trajetória, habilidades, projetos e e
 
 O portfólio segue um conceito criativo inspirado em:
 
-🟢 Interface estilo **Windows XP / desktop retrô**  
-🟢 Navegação baseada em ícones laterais  
-🟢 Janelas simulando sistemas operacionais   
-🟢 Layout imersivo dentro de um monitor
+🟢 Interface estilo **Frutiger Aero / Windows Vista**    
+🟢 Layout imersivo utilizando WebGl
 
 A proposta é criar uma experiência diferenciada e memorável para o visitante.
 
@@ -74,14 +77,4 @@ A proposta é criar uma experiência diferenciada e memorável para o visitante.
 <p>
   <img src="https://github.com/user-attachments/assets/b445adc6-1a10-4bf3-8427-105530016774" width="45%">
 </p>
-
-
-
-## 🛠️ Tecnologias Utilizadas
-
-### Front-end
-- HTML5
-- CSS3
-- JavaScript
-- React
 
