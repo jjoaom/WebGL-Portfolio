@@ -7,7 +7,9 @@
 
 Website de portfólio profissional desenvolvido para a disciplina **Laboratório de Desenvolvimento de Software – Engenharia de Software (PUC Minas)**.
 
-O objetivo do projeto é apresentar minha trajetória, habilidades, projetos e experiências através de uma interface moderna, interativa e hospedada em nuvem.
+Este projeto é um portfólio interativo em ambiente 3D desenvolvido com Three.js, combinando navegação em primeira pessoa com telas HTML integradas ao espaço virtual.
+
+O usuário pode explorar o ambiente utilizando controles estilo jogo (WASD + mouse) e alternar entre modo de navegação e modo de interação para acessar conteúdos como páginas de projetos, experiências e contato.
 
 ---
 
@@ -60,21 +62,45 @@ A proposta é criar uma experiência diferenciada e memorável para o visitante.
 ## 🎨 Wireframes
 ### Sobre Mim 
 <p>
-  <img src="https://github.com/user-attachments/assets/beed0660-18b4-4ed7-b5e7-b48cb316e9d9" width="45%">
+  <img width="700" height="1140" alt="Captura de tela 2026-03-01 190821" src="https://github.com/user-attachments/assets/69310cfd-84ba-47f8-be98-98743e56512c" />
 </p>
 
 ### Projetos
 <p>
-  <img src="https://github.com/user-attachments/assets/dac04723-814b-40c3-9d1d-e7fceda73b15" width="45%">
+  <img width="700" height="1140" alt="Captura de tela 2026-03-01 190850" src="https://github.com/user-attachments/assets/417c16f0-882f-4816-a29f-6d14728db280" />
 </p>
 
 ### Experiências 
 <p>
-  <img src="https://github.com/user-attachments/assets/d48a4663-a189-4797-994c-225f6be299a1" width="45%">
+  <img width="700" height="1138" alt="Captura de tela 2026-03-01 190920" src="https://github.com/user-attachments/assets/56602ce6-1c27-471a-8709-e59cbe4c6730" />
 </p>
 
 ### Contato
 <p>
-  <img src="https://github.com/user-attachments/assets/b445adc6-1a10-4bf3-8427-105530016774" width="45%">
+  <img width="700" height="1140" alt="Captura de tela 2026-03-01 190948" src="https://github.com/user-attachments/assets/3e5f8d66-0efd-472a-9c87-914990533576" />
 </p>
 
+---
+
+## 🎮 Controles
+### Movimentação
+- WASD → Andar
+- Mouse → Olhar ao redor
+- E → Alternar entre Jogar (mouse travado) e Interagir (mouse livre)
+- Clique → Destrava o mouse para interagir com as telas
+
+### Interação com Telas
+- Quando o mouse estiver livre, é possível clicar, rolar e usar formulários normalmente.
+
+### Modo Editar Telas
+- T → Ativar/Desativar modo edição
+- 1–4 → Selecionar tela
+- Tab → Próxima tela
+- Setas → Mover
+- PgUp / PgDn → Subir/Descer
+- Q / E → Rotacionar
+- + / - → Escalar
+
+### Layout
+- Ctrl + S → Exportar layout
+- Ctrl + O → Importar layout
