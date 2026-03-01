@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contatos</title>
+  <link rel="stylesheet" href="./contatos.css" />
+  <script src="./contatos.js" defer></script>
+</head>
+
+<body>
+  <div class="frame">
+    <div class="window">
+      <div class="window-inner contact-screen">
+
+        <h1 class="title">
+          Lorem ipsum dolor sit
+          <span class="title-underline"></span>
+        </h1>
+
+        <div class="avatar" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 12c2.76 0 5-2.24 5-5S14.76 2 12 2 7 4.24 7 7s2.24 5 5 5zm0 2c-3.33 0-10 1.67-10 5v3h20v-3c0-3.33-6.67-5-10-5z"/>
+          </svg>
+        </div>
+
+        <p class="bio">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+        </p>
+
+        <div class="actions">
+          <a class="btn btn-whats" href="https://wa.me/55SEUNUMERO" target="_blank" rel="noreferrer">
+            <span class="ico"><img src="/img/zap.png" alt="WhatsApp"></span>
+            WHATSAPP
+          </a>
+
+          <a class="btn btn-linkedin" href="https://www.linkedin.com/in/SEUUSUARIO" target="_blank" rel="noreferrer">
+            <span class="ico">in</span>
+            LINKEDIN
+          </a>
+
+          <!-- ABRIR MODAL -->
+          <button class="btn btn-email" type="button" id="openEmail">
+            <span class="ico">✉</span>
+            E-MAIL
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal" id="emailModal" aria-hidden="true">
+    <div class="modal-window" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-bar">
+        <strong class="modal-title" id="modalTitle">Enviar e-mail</strong>
+
+        <button class="modal-close" type="button" id="closeEmail" aria-label="Fechar">✕</button>
+      </div>
+
+      <form class="modal-body" id="contactForm">
+        <label class="field">
+          <span>Seu nome</span>
+          <input type="text" name="user_name" required />
+        </label>
+
+        <label class="field">
+          <span>Seu e-mail</span>
+          <input type="email" name="user_email" required />
+        </label>
+
+        <label class="field">
+          <span>Mensagem</span>
+          <textarea name="message" rows="5" required></textarea>
+        </label>
+
+        <div class="modal-actions">
+          <button class="btn btn-ghost" type="button" id="cancelEmail">Cancelar</button>
+          <button class="btn btn-send" type="submit">Enviar</button>
+        </div>
+
+        <p class="form-hint" id="formHint" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
