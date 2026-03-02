@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { createScene } from "./ThreeRender";
 import { setupPlayerControls } from "./PlayerControls";
+import * as THREE from "three";
 
 export default function ThreeScene() {
   const canvasRef = useRef(null);
@@ -34,6 +35,35 @@ export default function ThreeScene() {
 
     window.addEventListener("resize", handleResize);
 
+
+    const listener = new THREE.AudioListener();
+    camera.add(listener);
+
+    const sound = new THREE.Audio(listener);
+    const loader = new THREE.AudioLoader();
+
+    loader.load(
+      "/sound/ost.mp3",
+      (buffer) => {
+        sound.setBuffer(buffer);
+        sound.setLoop(true);
+        sound.setVolume(0.2);
+
+        // Autoplay só após interação
+        document.addEventListener(
+          "click",
+          () => {
+            if (!sound.isPlaying) sound.play();
+          },
+          { once: true }
+        );
+      },
+      undefined,
+      (err) => {
+        console.error("Erro ao carregar áudio:", err);
+      }
+    );
+
     return () => {
       window.removeEventListener("resize", handleResize);
 
@@ -65,7 +95,7 @@ export default function ThreeScene() {
           position: "fixed",
           inset: 0,
           zIndex: 10,
-          pointerEvents: "auto", 
+          pointerEvents: "auto",
         }}
       />
     </div>
