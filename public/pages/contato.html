@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contatos</title>
   <link rel="stylesheet" href="./contatos.css" />
-  <script src="./contatos.js" defer></script>
+  <script src="./contato.js" defer></script>
 </head>
-
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <body>
   <div class="frame">
     <div class="window">
@@ -19,9 +19,9 @@
         </h1>
 
         <div class="avatar" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 12c2.76 0 5-2.24 5-5S14.76 2 12 2 7 4.24 7 7s2.24 5 5 5zm0 2c-3.33 0-10 1.67-10 5v3h20v-3c0-3.33-6.67-5-10-5z"/>
-          </svg>
+           <div class="avatar">
+              <img src="../img/p1-1.jpg" alt="Foto de perfil" />
+            </div>
         </div>
 
         <p class="bio">
@@ -34,7 +34,7 @@
             WHATSAPP
           </a>
 
-          <a class="btn btn-linkedin" href="https://www.linkedin.com/in/SEUUSUARIO" target="_blank" rel="noreferrer">
+          <a class="btn btn-linkedin" href="https://www.linkedin.com/in/user" target="_blank" rel="noreferrer">
             <span class="ico">in</span>
             LINKEDIN
           </a>
@@ -50,7 +50,6 @@
     </div>
   </div>
 
-  <!-- MODAL -->
   <div class="modal" id="emailModal" aria-hidden="true">
     <div class="modal-window" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <div class="modal-bar">
@@ -84,5 +83,8 @@
       </form>
     </div>
   </div>
+    <!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
 </body>
 </html>

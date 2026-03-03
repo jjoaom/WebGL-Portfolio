@@ -5,65 +5,66 @@ import { CSS3DRenderer, CSS3DObject } from "three/examples/jsm/renderers/CSS3DRe
 /**
  * CONTROLES:
  * - WASD: anda (auto-trava quando tenta andar)
- * - E: alterna entre JOGAR (lock) e INTERAGIR (unlock)
- * - Clique: se estiver travado, destrava (pra permitir clicar nos botões)
- *
+ * - E: alterna PLAYER (lock) e UI (unlock)
  * - T: alterna modo EDITAR telas
  * - 1/2/3/4: seleciona tela
  * - Tab: próxima tela
+ * - (EDITAR) setas/PgUp/PgDn/Q/E/+/-: ajusta tela 3D
  *
- * - (EDITAR) Setas: move X/Z
- * - (EDITAR) PgUp/PgDn: move Y
- * - (EDITAR) Q/E: rotaciona Y
- * - (EDITAR) + / -: escala
- *
- * Layout:
- * - Ctrl+S: exporta layout.json
- * - Ctrl+O: importa layout.json
+ * ✅ NOVO (UI 2D real):
+ * - Aproximou de uma tela -> abre painel 2D automaticamente
+ * - F: força abrir painel 2D da tela selecionada
+ * - Esc: fecha painel 2D
  */
 
 export function setupPlayerControls(camera, renderer, composer, ground, scene, cssLayer) {
   // =========================
-  // PointerLock / Player
+  // Player / PointerLock
   // =========================
   const controls = new PointerLockControls(camera, renderer.domElement);
   const keys = new Set();
-
-  // sempre que destravar, limpa teclas (evita “W preso”)
   controls.addEventListener("unlock", () => keys.clear());
 
   // =========================
-  // CSS3D Renderer (overlay layer)
+  // Stacking básico
+  // =========================
+  renderer.domElement.style.position = "fixed";
+  renderer.domElement.style.inset = "0";
+  renderer.domElement.style.zIndex = "0";
+  renderer.domElement.style.pointerEvents = "auto";
+
+  cssLayer.style.position = "fixed";
+  cssLayer.style.inset = "0";
+  cssLayer.style.zIndex = "10";
+  cssLayer.style.pointerEvents = "none"; // ✅ CSS3D não recebe clique (só visual)
+
+  // =========================
+  // CSS3D Renderer (preview 3D)
   // =========================
   const cssRenderer = new CSS3DRenderer();
   cssRenderer.setSize(window.innerWidth, window.innerHeight);
 
-  cssRenderer.domElement.style.position = "absolute";
-  cssRenderer.domElement.style.top = "0";
-  cssRenderer.domElement.style.left = "0";
-  cssRenderer.domElement.style.width = "100%";
-  cssRenderer.domElement.style.height = "100%";
-  cssRenderer.domElement.style.pointerEvents = "auto";
+  cssRenderer.domElement.style.position = "fixed";
+  cssRenderer.domElement.style.inset = "0";
+  cssRenderer.domElement.style.width = "100vw";
+  cssRenderer.domElement.style.height = "100vh";
   cssRenderer.domElement.style.zIndex = "10";
+  cssRenderer.domElement.style.pointerEvents = "none"; // ✅ chave: não tenta clicar no CSS3D
 
   cssLayer.appendChild(cssRenderer.domElement);
 
   // =========================
-  // Telas (iframes)
+  // Fontes das telas
   // =========================
   const SCREEN_SOURCES = [
-    { id: "tela1", url: "/pages/sobre.html", title: "Tela 1" },
-    { id: "tela2", url: "/pages/projetos.html", title: "Tela 2" },
+    { id: "tela1", url: "/pages/sobre.html",        title: "Tela 1" },
+    { id: "tela2", url: "/pages/projetos.html",     title: "Tela 2" },
     { id: "tela3", url: "/pages/experiencias.html", title: "Tela 3" },
-    { id: "tela4", url: "/pages/contato.html", title: "Tela 4" },
+    { id: "tela4", url: "/pages/contato.html",      title: "Tela 4" },
   ];
 
-  const onUiWantsFocus = () => {
-    if (controls.isLocked) controls.unlock();
-  };
-
   const screens = SCREEN_SOURCES.map((s, i) =>
-    createCssScreen({
+    createCssPreviewScreen({
       id: s.id,
       title: s.title,
       url: s.url,
@@ -71,18 +72,104 @@ export function setupPlayerControls(camera, renderer, composer, ground, scene, c
       position: new THREE.Vector3(0, 2.2, i * 6),
       rotationY: Math.PI / 2,
       scale: 0.01,
-      onUiWantsFocus,
     })
   );
 
+  // =========================
+  // UI 2D clicável
+  // =========================
+  const ui2d = document.createElement("div");
+  ui2d.dataset.ui2d = "true";
+  ui2d.style.position = "fixed";
+  ui2d.style.inset = "0";
+  ui2d.style.zIndex = "999999";
+  ui2d.style.display = "none";
+  ui2d.style.pointerEvents = "auto"; 
+  ui2d.style.background = "rgba(0,0,0,0.25)";
+  ui2d.style.backdropFilter = "blur(2px)";
+
+  ui2d.innerHTML = `
+    <div data-ui2d-panel style="
+      position:absolute; left:50%; top:50%;
+      transform:translate(-50%,-50%);
+      width:min(980px, 92vw);
+      height:min(620px, 86vh);
+      border-radius:24px;
+      overflow:hidden;
+      box-shadow: 0 18px 60px rgba(0,0,0,.35);
+      border: 2px solid rgba(255,255,255,.25);
+      background: rgba(255,255,255,.08);
+    ">
+      <div style="
+        display:flex; align-items:center; justify-content:space-between;
+        padding:10px 12px;
+        background: rgba(0,0,0,.35);
+        color: white; font: 600 13px/1 system-ui;
+      ">
+        <div data-ui2d-title>Preview</div>
+        <button data-ui2d-close style="
+          all:unset; cursor:pointer; padding:6px 10px;
+          border-radius:10px; background: rgba(255,255,255,.12);
+        ">Fechar (Esc)</button>
+      </div>
+      <iframe data-ui2d-iframe
+        style="width:100%; height:calc(100% - 44px); border:0; display:block; background:white;"
+      ></iframe>
+    </div>
+  `;
+
+  document.body.appendChild(ui2d);
+
+  const ui2dPanel = ui2d.querySelector("[data-ui2d-panel]");
+  const ui2dIframe = ui2d.querySelector("[data-ui2d-iframe]");
+  const ui2dTitle = ui2d.querySelector("[data-ui2d-title]");
+  const ui2dClose = ui2d.querySelector("[data-ui2d-close]");
+
+  let ui2dOpen = false;
+  let ui2dForced = false;      // F força abrir
   let selectedIndex = 0;
   let editMode = false;
+let autoBlocked = false;
+let autoBlockUntilFar = false;
+  function open2DFor(index) {
+    const scr = screens[index];
+    if (!scr) return;
 
+    ui2dTitle.textContent = `${scr.title} • ${scr.url}`;
+    ui2dIframe.src = scr.url;
+
+    ui2d.style.display = "block";
+    ui2dOpen = true;
+
+    if (controls.isLocked) controls.unlock();
+    renderer.domElement.style.pointerEvents = "none";
+  }
+
+  function close2D(manual = true) {
+  ui2d.style.display = "none";
+  ui2dOpen = false;
+  ui2dForced = false;
+
+  renderer.domElement.style.pointerEvents = "auto";
+
+  if (manual) {
+    autoBlocked = true;
+    autoBlockUntilFar = true; // só libera quando se afastar
+  }
+}
+
+  ui2dClose.addEventListener("click", close2D);
+  ui2d.addEventListener("mousedown", (e) => {
+    if (e.target === ui2d) close2D();
+  });
+
+  // =========================
+  // Visual seleção (tela 3D)
+  // =========================
   function refreshSelectionVisual() {
     screens.forEach((scr, i) => {
       scr.el.style.outline = i === selectedIndex ? "2px solid rgba(255,255,255,0.75)" : "none";
       scr.el.style.boxShadow = i === selectedIndex ? "0 0 24px rgba(255,255,255,0.18)" : "none";
-      scr.el.dataset.selected = i === selectedIndex ? "true" : "false";
 
       const badge = scr.el.querySelector('[data-badge="mode"]');
       if (badge) badge.textContent = editMode ? "EDITAR" : (controls.isLocked ? "PLAYER" : "UI");
@@ -94,50 +181,31 @@ export function setupPlayerControls(camera, renderer, composer, ground, scene, c
   refreshSelectionVisual();
 
   // =========================
-  // Layout: carregar ao iniciar (se existir)
+  // Layout load
   // =========================
   (async () => {
     try {
       const layout = await fetchLayoutJson("/config/layout.json");
       applyScreensLayout(screens, layout);
       refreshSelectionVisual();
-    } catch {
-      // sem layout default
-    }
+    } catch {}
   })();
-
-  // =========================
-  // CLIQUE: se estiver travado, destrava (pra UI funcionar)
-  // (capture global = pega antes de qualquer coisa)
-  // =========================
-  const onAnyMouseDownCapture = (e) => {
-    if (!controls.isLocked) return;
-
-    controls.unlock();
-    keys.clear();
-    refreshSelectionVisual();
-
-    // esse clique serve só pra destravar
-    e.preventDefault();
-    e.stopPropagation();
-  };
-
-  window.addEventListener("mousedown", onAnyMouseDownCapture, true);
 
   // =========================
   // Teclado
   // =========================
   const preventScrollKeys = new Set([
-    "ArrowUp",
-    "ArrowDown",
-    "ArrowLeft",
-    "ArrowRight",
-    "PageUp",
-    "PageDown",
-    "Space",
+    "ArrowUp","ArrowDown","ArrowLeft","ArrowRight","PageUp","PageDown","Space"
   ]);
 
   const onKeyDown = (e) => {
+    // fechar UI 2D
+    if (e.code === "Escape" && !e.repeat && ui2dOpen) {
+      e.preventDefault();
+      close2D();
+      return;
+    }
+
     // Exportar layout (Ctrl+S)
     if (e.ctrlKey && e.code === "KeyS" && !e.repeat) {
       e.preventDefault();
@@ -164,12 +232,21 @@ export function setupPlayerControls(camera, renderer, composer, ground, scene, c
       return;
     }
 
-    // Tecla E: alterna lock/unlock (jogar <-> interagir)
+    // E: alterna lock/unlock (jogar <-> interagir)
     if (e.code === "KeyE" && !e.repeat) {
       e.preventDefault();
       if (controls.isLocked) controls.unlock();
       else controls.lock();
       refreshSelectionVisual();
+      return;
+    }
+
+    // F: força abrir UI 2D da tela selecionada
+    if (e.code === "KeyF" && !e.repeat) {
+      e.preventDefault();
+      ui2dForced = !ui2dForced;
+      if (ui2dForced) open2DFor(selectedIndex);
+      else close2D();
       return;
     }
 
@@ -187,9 +264,7 @@ export function setupPlayerControls(camera, renderer, composer, ground, scene, c
       refreshSelectionVisual();
     }
 
-    // Só previne scroll quando está no modo EDITAR
     if (editMode && preventScrollKeys.has(e.code)) e.preventDefault();
-
     keys.add(e.code);
   };
 
@@ -197,6 +272,29 @@ export function setupPlayerControls(camera, renderer, composer, ground, scene, c
 
   window.addEventListener("keydown", onKeyDown, { capture: true });
   window.addEventListener("keyup", onKeyUp, { capture: true });
+
+  // =========================
+  // Auto-open por proximidade
+  // =========================
+  const AUTO_OPEN_DIST = 3.2;   
+  const LOOK_DOT = 0.55;        
+
+  function shouldAutoOpen(scrObj) {
+    const camPos = camera.position;
+    const scrPos = scrObj.position;
+
+    const dist = camPos.distanceTo(scrPos);
+    if (dist > AUTO_OPEN_DIST) return false;
+
+    // olhar: compara direção da câmera com direção até a tela
+    const forward = new THREE.Vector3();
+    camera.getWorldDirection(forward);
+
+    const toScreen = new THREE.Vector3().subVectors(scrPos, camPos).normalize();
+    const dot = forward.dot(toScreen);
+
+    return dot > LOOK_DOT;
+  }
 
   // =========================
   // Loop
@@ -212,26 +310,44 @@ export function setupPlayerControls(camera, renderer, composer, ground, scene, c
 
     const selected = screens[selectedIndex]?.obj;
 
-    if (!editMode) {
+    // --- auto abrir UI2D (se não estiver forçado manualmente)
+    if (!ui2dForced) {
+  const nearIndex = screens.findIndex((s) => shouldAutoOpen(s.obj));
+
+  // Se estiver bloqueado, só libera quando sair da área
+  if (autoBlocked) {
+    if (nearIndex < 0) {
+      autoBlocked = false;
+      autoBlockUntilFar = false;
+    }
+  } else {
+    if (nearIndex >= 0) {
+      if (!ui2dOpen) open2DFor(nearIndex);
+    } else {
+      if (ui2dOpen) close2D(false);
+    }
+  }
+}
+
+    if (!editMode && !ui2dOpen) {
       const speed = 5;
 
-      const forward = (keys.has("KeyW") ? 1 : 0) + (keys.has("KeyS") ? -1 : 0);
-      const strafe  = (keys.has("KeyD") ? 1 : 0) + (keys.has("KeyA") ? -1 : 0);
+      const forward =
+        (keys.has("KeyW") ? 1 : 0) + (keys.has("KeyS") ? -1 : 0);
+      const strafe =
+        (keys.has("KeyD") ? 1 : 0) + (keys.has("KeyA") ? -1 : 0);
 
       if (forward !== 0 || strafe !== 0) {
-        // auto-lock quando tenta andar
         if (!controls.isLocked) {
           controls.lock();
           refreshSelectionVisual();
         }
 
-        // move mesmo frame (não depende do isLocked atualizar)
         controls.moveForward(forward * speed * delta);
         controls.moveRight(strafe * speed * delta);
 
         raycaster.set(camera.position, new THREE.Vector3(0, -1, 0));
         const intersects = raycaster.intersectObject(ground);
-
         if (intersects.length > 0) {
           camera.position.y =
             intersects[0].point.y + 1.7 + Math.sin(bobTime) * 0.04;
@@ -240,8 +356,7 @@ export function setupPlayerControls(camera, renderer, composer, ground, scene, c
       } else {
         bobTime = 0;
       }
-    } else if (selected) {
-      // ===== Modo editar
+    } else if (editMode && selected) {
       const moveStep = 6 * delta;
       const rotStep = 1.8 * delta;
       const scaleStep = 0.6 * delta;
@@ -285,7 +400,6 @@ export function setupPlayerControls(camera, renderer, composer, ground, scene, c
   return () => {
     cancelAnimationFrame(rafId);
 
-    window.removeEventListener("mousedown", onAnyMouseDownCapture, true);
     window.removeEventListener("keydown", onKeyDown, { capture: true });
     window.removeEventListener("keyup", onKeyUp, { capture: true });
     window.removeEventListener("resize", onResize);
@@ -298,14 +412,16 @@ export function setupPlayerControls(camera, renderer, composer, ground, scene, c
     if (cssRenderer.domElement?.parentNode) {
       cssRenderer.domElement.parentNode.removeChild(cssRenderer.domElement);
     }
+
+    ui2d.remove();
   };
 }
 
-/*
-  Cria uma tela CSS3D com iframe.
-  Obs: o iframe só recebe clique quando o pointerlock estiver destravado.
+/**
+ * Preview 3D (CSS3D) - só visual
+ * Pointer-events sempre NONE para não depender de hit-test.
  */
-function createCssScreen({ id, title, url, scene, position, rotationY, scale, onUiWantsFocus }) {
+function createCssPreviewScreen({ id, title, url, scene, position, rotationY, scale }) {
   const el = document.createElement("div");
   el.classList.add("css3d-ui");
 
@@ -314,9 +430,10 @@ function createCssScreen({ id, title, url, scene, position, rotationY, scale, on
   el.style.height = "520px";
   el.style.borderRadius = "28px";
   el.style.overflow = "hidden";
-  el.style.pointerEvents = "auto";
   el.style.background = "transparent";
-  el.style.userSelect = "auto";
+  el.style.userSelect = "none";
+
+  el.style.pointerEvents = "none";
 
   const iframe = document.createElement("iframe");
   iframe.src = url;
@@ -324,27 +441,16 @@ function createCssScreen({ id, title, url, scene, position, rotationY, scale, on
   iframe.style.height = "100%";
   iframe.style.border = "0";
   iframe.style.display = "block";
-  iframe.style.background = "transparent";
-  iframe.setAttribute("scrolling", "yes");
+  iframe.style.background = "white";
 
-  // Qualquer tentativa de interagir com a tela destrava
-  iframe.addEventListener("load", () => {
-    try {
-      const w = iframe.contentWindow;
-      w.addEventListener("mousedown", () => onUiWantsFocus?.(), { passive: true });
-      w.addEventListener("wheel", () => onUiWantsFocus?.(), { passive: true });
-      w.addEventListener("touchstart", () => onUiWantsFocus?.(), { passive: true });
-    } catch {
-      // cross-origin etc
-    }
-  });
+  iframe.style.pointerEvents = "none";
 
   el.appendChild(iframe);
 
   const hud = document.createElement("div");
   hud.style.position = "absolute";
   hud.style.top = "10px";
-  hud.style.right = "12px";
+  hud.style.left = "12px";
   hud.style.display = "flex";
   hud.style.gap = "8px";
   hud.style.zIndex = "9999";
@@ -359,24 +465,16 @@ function createCssScreen({ id, title, url, scene, position, rotationY, scale, on
   const obj = new CSS3DObject(el);
   obj.position.copy(position);
   obj.rotation.y = rotationY ?? 0;
-
-  const s = scale ?? 0.01;
-  obj.scale.set(s, s, s);
+  obj.scale.setScalar(scale ?? 0.01);
 
   scene.add(obj);
 
-  // wrapper também destrava
-  el.addEventListener("mouseenter", () => onUiWantsFocus?.(), { passive: true });
-  el.addEventListener("mousedown", () => onUiWantsFocus?.(), { passive: true });
-  el.addEventListener("wheel", () => onUiWantsFocus?.(), { passive: true });
-
-  return { id, title, el, obj };
+  return { id, title, url, el, obj };
 }
 
 /* =========================================================
-   Layout (export/import/load)
+   Layout helpers
    ========================================================= */
-
 function serializeScreensLayout(screens) {
   const layout = {};
   screens.forEach((scr) => {

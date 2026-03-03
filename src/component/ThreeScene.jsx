@@ -74,30 +74,44 @@ export default function ThreeScene() {
     };
   }, []);
 
-  return (
+return (
+  <div
+    style={{
+      position: "fixed",
+      inset: 0,
+      width: "100vw",
+      height: "100vh",
+      overflow: "hidden",
+      zIndex: 0,
+
+      // ✅ IMPORTANTE: wrapper não pode capturar mouse
+      pointerEvents: "none",
+    }}
+  >
+    <canvas
+      ref={canvasRef}
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "block",
+        zIndex: 0,
+
+        // canvas só pega mouse quando o PlayerControls liberar
+        pointerEvents: "auto",
+      }}
+    />
+
     <div
+      ref={cssLayerRef}
       style={{
         position: "fixed",
         inset: 0,
-        width: "100vw",
-        height: "100vh",
-        overflow: "hidden",
-      }}
-    >
-      <canvas
-        ref={canvasRef}
-        style={{ width: "100%", height: "100%", display: "block" }}
-      />
+        zIndex: 20,
 
-      <div
-        ref={cssLayerRef}
-        style={{
-          position: "fixed",
-          inset: 0,
-          zIndex: 10,
-          pointerEvents: "auto",
-        }}
-      />
-    </div>
-  );
+        // ✅ tapete não pega mouse; quem pega são as telas (.css3d-ui)
+        pointerEvents: "none",
+      }}
+    />
+  </div>
+);
 }
