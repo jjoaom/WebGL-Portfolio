@@ -124,19 +124,26 @@ export function setupPlayerControls({
 
   //Montar telas CSS3D
   const screens = screenDefs.map(({ id, title, element, position, rotationY, scale }) => {
-    const wrapper = document.createElement("div");
-    wrapper.style.cssText =
-      "position:relative;width:900px;height:520px;border-radius:28px;overflow:hidden;background:transparent;user-select:none;pointer-events:none;";
-    element.style.cssText += "width:100%;height:100%;pointer-events:none;";
-    wrapper.appendChild(element);
+    Object.assign(element.style, {
+      position: "absolute",
+      top: "0",
+      left: "0",
+      width: "900px",
+      height: "520px",
+      borderRadius: "28px",
+      overflow: "hidden",
+      background: "transparent",
+      userSelect: "none",
+      pointerEvents: "none",
+    });
 
-    const obj = new CSS3DObject(wrapper);
+    const obj = new CSS3DObject(element);
     obj.position.copy(position);
     obj.rotation.y = rotationY ?? 0;
     obj.scale.setScalar(scale ?? 0.01);
     scene.add(obj);
 
-    return { id, title, el: wrapper, obj };
+    return { id, title, el: element, obj };
   });
 
   function notify(patch) { notifyRef.current?.(patch); }

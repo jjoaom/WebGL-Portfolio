@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createScene } from "./ThreeRender";
 import { setupPlayerControls, ScreenOverlays } from "./PlayerControls";
 import ScreenPortal from "./ScreenPortal";
@@ -105,9 +105,7 @@ export default function ThreeScene() {
   const canvasRef = useRef(null);
   const cssLayerRef = useRef(null);
 
-  const screenElementsRef = useRef({});
-  const mountedCountRef = useRef(0);
-  const [screenDefs, setScreenDefs] = useState(null);
+  const [screenElements, setScreenElements] = useState({});
   const [panel2D, setPanel2D] = useState(null);
 
   // Ref que o loop imperativo usa para atualizar os overlays JSX
@@ -121,21 +119,30 @@ export default function ThreeScene() {
     window.__portfolioClose2D?.();
   }, []);
 
-  function onScreenMount(id, el) {
-    screenElementsRef.current[id] = el;
-    mountedCountRef.current += 1;
-    if (mountedCountRef.current === SCREEN_CONFIGS.length) {
-      setScreenDefs(
-        SCREEN_CONFIGS.map((cfg) => ({
-          id: cfg.id, title: cfg.title,
-          element: screenElementsRef.current[cfg.id],
-          position: cfg.position,
-          rotationY: cfg.rotationY,
-          scale: cfg.scale,
-        }))
-      );
-    }
-  }
+  const handleScreenMount = useCallback((id, element) => {
+    setScreenElements((prev) => {
+      if (prev[id] === element) return prev;
+
+      const next = { ...prev };
+      if (element) next[id] = element;
+      else delete next[id];
+      return next;
+    });
+  }, []);
+
+  const screenDefs = useMemo(() => {
+    const allMounted = SCREEN_CONFIGS.every((cfg) => screenElements[cfg.id]);
+    if (!allMounted) return null;
+
+    return SCREEN_CONFIGS.map((cfg) => ({
+      id: cfg.id,
+      title: cfg.title,
+      element: screenElements[cfg.id],
+      position: cfg.position,
+      rotationY: cfg.rotationY,
+      scale: cfg.scale,
+    }));
+  }, [screenElements]);
 
   useEffect(() => {
     if (!screenDefs) return;
@@ -200,7 +207,7 @@ export default function ThreeScene() {
     <>
       {/* Portais: componentes de página montados fora da tela para o CSS3D usar */}
       {SCREEN_CONFIGS.map((cfg) => (
-        <ScreenPortal key={cfg.id} id={cfg.id} onMount={(el) => onScreenMount(cfg.id, el)}>
+        <ScreenPortal key={cfg.id} id={cfg.id} onMount={handleScreenMount}>
           <cfg.component />
         </ScreenPortal>
       ))}

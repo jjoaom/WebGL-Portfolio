@@ -2,10 +2,13 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 export default function Hud() {
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation('ui');
+
+  const currentLanguage = i18n.resolvedLanguage || i18n.language || 'pt';
+  const isEnglish = currentLanguage.startsWith('en');
 
   const toggleLanguage = () => {
-    const newLang = i18n.language === 'en' ? 'pt' : 'en';
+    const newLang = isEnglish ? 'pt' : 'en';
     i18n.changeLanguage(newLang);
   };
 
@@ -53,7 +56,7 @@ export default function Hud() {
             fontWeight: 'bold'
           }}
         >
-          {i18n.language === 'en' ? '🇧🇷 PT' : '🇺🇸 EN'}
+          {isEnglish ? t('hud.languageSwitch.pt') : t('hud.languageSwitch.en')}
         </button>
       </div>
 
@@ -70,10 +73,10 @@ export default function Hud() {
           fontSize: '14px',
           border: '1px solid rgba(255,255,255,0.1)'
         }}>
-          <span><strong>WASD</strong> Mover</span>
-          <span><strong>Mouse</strong> Olhar</span>
-          <span><strong>Click</strong> Interagir</span>
-          <span><strong>ESC</strong> Sair</span>
+          <span><strong>WASD</strong> {t('hud.controls.move')}</span>
+          <span><strong>Mouse</strong> {t('hud.controls.look')}</span>
+          <span><strong>Click</strong> {t('hud.controls.interact')}</span>
+          <span><strong>ESC</strong> {t('hud.controls.exit')}</span>
         </div>
       </div>
     </div>

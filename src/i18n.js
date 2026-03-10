@@ -11,12 +11,19 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
+    supportedLngs: ['pt', 'en'],
+    nonExplicitSupportedLngs: true,
+    load: 'languageOnly',
     fallbackLng: 'pt',
     ns: ['ui', 'portfolio'],
     defaultNS: 'portfolio',
     resources: {
       pt: { ui: ptUI, portfolio: ptPortfolio },
       en: { ui: enUI, portfolio: enPortfolio },
+    },
+    detection: {
+      order: ['querystring', 'localStorage', 'navigator', 'htmlTag'],
+      caches: ['localStorage'],
     },
     interpolation: { escapeValue: false },
   })

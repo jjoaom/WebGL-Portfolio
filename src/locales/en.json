@@ -1,4 +1,16 @@
 {
+  "hud": {
+    "languageSwitch": {
+      "pt": "🇧🇷 PT",
+      "en": "🇺🇸 EN"
+    },
+    "controls": {
+      "move": "Move",
+      "look": "Look",
+      "interact": "Interact",
+      "exit": "Exit"
+    }
+  },
   "nav": {
     "about": "About",
     "projects": "Projects",

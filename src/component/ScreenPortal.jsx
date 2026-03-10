@@ -1,44 +1,47 @@
-import { useRef, useState, useLayoutEffect } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
 /**
- * Renderiza `children` num div fora da tela (mas no DOM real),
- * chama onMount(firstChild) quando o React terminar de pintar.
- *
- * O container é criado ANTES do primeiro render (fora do useEffect)
- * para o createPortal ter um destino imediato.
+ * Mantem um container DOM estavel sob controle do React.
+ * O Three.js recebe esse mesmo container via CSS3DObject e apenas o posiciona.
  */
 export default function ScreenPortal({ id, onMount, children }) {
-  // Cria o container uma única vez (ref inicializado na 1ª chamada)
   const containerRef = useRef(null);
   if (!containerRef.current) {
     const el = document.createElement("div");
     el.id = `screen-portal-${id}`;
     el.style.cssText = `
-      position: fixed;
-      top: -9999px;
-      left: -9999px;
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 900px;
-      height: 550px;
-      pointer-events: none;
-      visibility: visible;
+      height: 520px;
+      border-radius: 28px;
       overflow: hidden;
+      background: transparent;
+      user-select: none;
+      pointer-events: none;
     `;
-    document.body.appendChild(el);
     containerRef.current = el;
   }
 
-  // useLayoutEffect: dispara após o DOM ser pintado, antes do browser renderizar
-  // Garante que o firstElementChild já existe quando chamamos onMount
   useLayoutEffect(() => {
-    const el = containerRef.current?.firstElementChild;
-    if (el) onMount?.(el);
+    const container = containerRef.current;
+    if (!container) return undefined;
+
+    if (!container.isConnected) {
+      document.body.appendChild(container);
+    }
+
+    onMount?.(id, container);
 
     return () => {
-      containerRef.current?.remove();
-      containerRef.current = null;
+      onMount?.(id, null);
+      if (container.isConnected) {
+        container.remove();
+      }
     };
-  }, []);
+  }, [id, onMount]);
 
   return createPortal(children, containerRef.current);
 }
