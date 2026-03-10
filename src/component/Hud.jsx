@@ -74,6 +74,7 @@ export default function Hud() {
           border: '1px solid rgba(255,255,255,0.1)'
         }}>
           <span><strong>WASD</strong> {t('hud.controls.move')}</span>
+          <span><strong>Shift</strong> {t('hud.controls.run')}</span>
           <span><strong>Mouse</strong> {t('hud.controls.look')}</span>
           <span><strong>Click</strong> {t('hud.controls.interact')}</span>
           <span><strong>ESC</strong> {t('hud.controls.exit')}</span>

@@ -6,6 +6,7 @@
     },
     "controls": {
       "move": "Mover",
+      "run": "Correr",
       "look": "Olhar",
       "interact": "Interagir",
       "exit": "Sair"

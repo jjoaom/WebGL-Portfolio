@@ -6,6 +6,7 @@
     },
     "controls": {
       "move": "Move",
+      "run": "Run",
       "look": "Look",
       "interact": "Interact",
       "exit": "Exit"

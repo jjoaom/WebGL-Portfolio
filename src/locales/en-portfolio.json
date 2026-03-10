@@ -1,56 +1,86 @@
 {
   "about": {
-    "name": "João Silva",
-    "role": "Software Engineer",
-    "bio": "Software Engineering student at PUC Minas",
+    "name": "João Marcos de Aquino Gonçalves",
+    "role": "Software Engineering | AppSec & DevSecOps",
+    "bio": "Information Security intern with hands-on experience in vulnerability analysis, CI/CD pipelines, and frameworks such as NIST CSF 2.0, SSDF, and OWASP. ISC2 CC and Linux Foundation certified. Focused on AppSec and DevSecOps, with a solid foundation in Linux, Docker, and SAST/DAST tooling.",
     "photo": "/assets/pfp.png",
-    "location": "Brazil",
-    "email": "joao@email.com",
-    "linkedin": "https://linkedin.com/in/joaotestefake",
-    "github": "https://github.com/joaosilva"
+    "location": "Belo Horizonte, Brazil",
+    "email": "joaomarcos.aquino@hotmail.com",
+    "linkedin": "https://linkedin.com/in/jjoaom",
+    "github": "https://github.com/jjoaom"
   },
   "experience": {
     "jobs": [
       {
-        "company": "IT company",
-        "role": "Slavery Intern",
-        "period": "2001 - present",
-        "description": "Responsible for delivering hot coffee to supervisors."
+        "company": "RHI Magnesita",
+        "role": "Information Security Intern",
+        "period": "May 2025 - Present",
+        "description": "Performed security assessments on web applications using Burp Suite, Nikto, and OWASP ZAP, identifying vulnerabilities aligned with the OWASP Top 10. Supported the implementation of GRC controls based on NIST CSF 2.0 and NIST SP 800-218 (SSDF) frameworks. Leveraged Cyberint and BlackKite for external threat monitoring and third-party risk analysis. Produced technical documentation on DevSecOps practices, including an overview of OWASP SAMM and SAST/DAST tool integration in CI/CD pipelines. Collaborated with development teams on GitHub Actions pipeline reviews, integrating Trivy and SonarQube for continuous scanning of Docker images and source code."
+      },
+      {
+        "company": "Max Hospedagem",
+        "role": "Technical Support Level 2",
+        "period": "April 2021 - April 2025",
+        "description": "Promoted from Intern to Level 2 in under a year, taking on server administration and internal development responsibilities. Developed automation scripts in Python, Bash, and JavaScript that reduced recurring task execution time by 40%. Administered Linux servers (Nginx, Webmail, DNS). Managed web applications and internal services, ensuring consistent performance and client satisfaction."
       }
     ],
     "education": [
       {
-        "institution": "PUC Minas",
-        "degree": "Software Engineering",
-        "period": "2023 - 2027",
-        "description": "Focus on..."
+        "institution": "Pontifical Catholic University of Minas Gerais (PUC Minas)",
+        "degree": "Bachelor of Software Engineering (in progress)",
+        "period": "2023 - Present",
+        "description": "Relevant coursework: Software Engineering, Databases, Computer Networks, Information Security."
+      },
+      {
+        "institution": "SENAI Euvaldo Lodi",
+        "degree": "Technical Diploma in Internet Computing",
+        "period": "2020 - 2021",
+        "description": "Web Development, Algorithms, and Infrastructure."
       }
     ]
   },
+  "certifications": [
+    "ISC2: Certified in Cybersecurity (CC) — valid through Feb. 2029",
+    "Linux Foundation (2026): LFS162 DevOps and SRE; LFS180 DevSecOps for Managers; LFEL1002 Getting Started with Rust; LFEL1004 Authentication and Authorization Web/API; LFC108 Cybersecurity Essentials; LFD125 Security for Software Dev. Managers",
+    "Cisco (2024–2026): Introduction to Cybersecurity; Networking Basics; Networking Devices and Initial Configuration; Endpoint Security",
+    "AWS: Academy Graduate — Cloud Foundations (2025)",
+    "CertiProf: Cybersecurity Awareness CAPC (2024)",
+    "Dio.me: Bootcamp Linux from Scratch (2023)",
+    "PUC Minas: Award-Winning Academic Project — PUC Caronas (2024)"
+  ],
+  "skills": {
+    "appsec_devsecops": ["SAST", "DAST", "SCA", "RASP", "CI/CD with GitHub Actions", "Docker", "Docker Compose", "CodeQL", "SonarQube", "Trivy", "OWASP ZAP", "Nikto", "Aqua Security", "GitHub Advanced Security"],
+    "frameworks_standards": ["OWASP Top 10", "OWASP SAMM", "NIST CSF 2.0", "NIST SP 800-218 (SSDF)", "GRC"],
+    "monitoring_intelligence": ["Cyberint", "BlackKite", "Burp Suite", "Log Monitoring"],
+    "languages": ["JavaScript", "TypeScript", "Python", "Java", "C/C++", "Rust", "HTML", "CSS", "Bash"],
+    "infrastructure": ["Linux", "Nginx", "MySQL", "Ansible", "AWS Cloud Foundations", "Azure"],
+    "spoken_languages": ["Portuguese (Native)", "English (Advanced)"]
+  },
   "projects": [
     {
-      "title": "project 1",
-      "description": "Platform for logistics and real-time sensor monitoring.",
-      "tags": ["IoT", "Docker", "GitHub Actions"],
-      "link": "https://github.com/"
+      "title": "TI2 SensorFix",
+      "description": "IoT logistics platform for real-time sensor monitoring with security pipeline including CodeQL, OWASP, and Semgrep.",
+      "tags": ["IoT", "React", "Docker", "GitHub Actions", "CodeQL", "Semgrep"],
+      "link": "https://github.com/jjoaom/TI2-PUCMG-SensorFix"
     },
     {
-      "title": "project 2",
-      "description": "E-commerce",
-      "tags": ["E-commerce", "Java", "SonarQube"],
-      "link": "https://github.com/j"
+      "title": "TI3 PontoCerto",
+      "description": "E-commerce platform with containerized infrastructure deployed on Azure, secured with SonarQube and Snyk.",
+      "tags": ["E-commerce", "Java", "Docker", "Azure", "SonarQube", "Snyk"],
+      "link": "https://github.com/jjoaom/TI3-PUCMG-PontoCerto"
     },
     {
-      "title": "project 3",
-      "description": "Sustainability mobile app",
-      "tags": ["Flutter", "Qodana", "CI/CD", "Android"],
-      "link": "https://github.com/"
+      "title": "TI4 Animongs",
+      "description": "Sustainability mobile app with Kotlin/Spring Boot backend, Flutter frontend, and full DevSecOps hardening pipeline.",
+      "tags": ["Flutter", "Kotlin", "Spring Boot", "Docker", "Trivy", "Qodana", "Semgrep", "GitHub Actions"],
+      "link": "https://github.com/jjoaom/TI4-ANIMONGS"
     }
   ],
   "contact": {
-    "message": "Open to opportunities in Backend, Frontend, and Software Engineering.",
-    "email": "joao@email.com",
-    "linkedin": "https://linkedin.com/in/joao",
-    "github": "https://github.com/joao"
+    "message": "Open to opportunities in AppSec, DevSecOps, and Software Engineering.",
+    "email": "joaomarcos.aquino@hotmail.com",
+    "phone": "+55 31 99325-6803",
+    "linkedin": "https://linkedin.com/in/jjoaom",
+    "github": "https://github.com/jjoaom"
   }
 }

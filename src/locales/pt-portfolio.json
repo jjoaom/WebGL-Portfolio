@@ -1,56 +1,86 @@
 {
   "about": {
-    "name": "João Silva",
-    "role": "Engenheiro de Software",
-    "bio": "Estudante de Engenharia de Software na PUC Minas",
+    "name": "João Marcos de Aquino Gonçalves",
+    "role": "Engenharia de Software | AppSec e DevSecOps",
+    "bio": "Estagiário de Segurança da Informação com experiência prática em análise de vulnerabilidades, pipelines CI/CD e frameworks como NIST CSF 2.0, SSDF e OWASP. Certificado ISC2 CC e Linux Foundation. Foco em AppSec e DevSecOps, com base sólida em Linux, Docker e ferramentas SAST/DAST.",
     "photo": "/assets/pfp.png",
-    "location": "Brasil",
-    "email": "joao@email.com",
-    "linkedin": "https://linkedin.com/in/joaotestefake",
-    "github": "https://github.com/joaosilva"
+    "location": "Belo Horizonte, MG",
+    "email": "joaomarcos.aquino@hotmail.com",
+    "linkedin": "https://linkedin.com/in/jjoaom",
+    "github": "https://github.com/jjoaom"
   },
   "experience": {
     "jobs": [
       {
-        "company": "empresa de ti",
-        "role": "Estagiário de Escravidão",
-        "period": "2001 - atual",
-        "description": "Desenvolvimento de levar café quente para supervisores."
+        "company": "RHI Magnesita",
+        "role": "Estagiário em Segurança da Informação",
+        "period": "Maio 2025 - Presente",
+        "description": "Realizou análises de segurança em aplicações web utilizando Burp Suite, Nikto e OWASP ZAP, identificando vulnerabilidades em conformidade com o OWASP Top 10. Apoiou a implementação de controles de GRC com base nos frameworks NIST CSF 2.0 e NIST SP 800-218 (SSDF), contribuindo para a maturidade do programa de segurança corporativo. Utilizou Cyberint e BlackKite para monitoramento de ameaças externas e análise de risco de terceiros. Elaborou documentação técnica sobre DevSecOps, incluindo overview dos frameworks OWASP SAMM e integração de ferramentas SAST/DAST em pipelines CI/CD. Colaborou com equipes de desenvolvimento na revisão de pipelines GitHub Actions, integrando Trivy e SonarQube para varredura contínua de imagens Docker e código-fonte."
+      },
+      {
+        "company": "Max Hospedagem",
+        "role": "Suporte Técnico Nível 2",
+        "period": "Abril 2021 - Abril 2025",
+        "description": "Promovido de Estagiário a Nível 2 em menos de um ano, assumindo responsabilidades de administração de servidores e desenvolvimento interno. Desenvolveu scripts de automação em Python, Bash e JavaScript que reduziram o tempo de execução de tarefas recorrentes em 40%. Administrou servidores Linux (Nginx, Webmail, DNS). Gerenciou aplicações web e serviços internos, garantindo desempenho e satisfação dos clientes."
       }
     ],
     "education": [
       {
-        "institution": "PUC Minas",
-        "degree": "Engenharia de Software",
-        "period": "2023 - 2027",
-        "description": "Foco em..."
+        "institution": "Pontifícia Universidade Católica de Minas Gerais (PUC Minas)",
+        "degree": "Bacharelado em Engenharia de Software (em andamento)",
+        "period": "2023 - Presente",
+        "description": "Disciplinas relevantes: Engenharia de Software, Banco de Dados, Redes de Computadores, Segurança da Informação."
+      },
+      {
+        "institution": "SENAI Euvaldo Lodi",
+        "degree": "Curso Técnico em Informática para Internet",
+        "period": "2020 - 2021",
+        "description": "Desenvolvimento Web, Algoritmos e Infraestrutura."
       }
     ]
   },
+  "certifications": [
+    "ISC2: Certified in Cybersecurity (CC) — válida até fev. 2029",
+    "Linux Foundation (2026): LFS162 DevOps and SRE; LFS180 DevSecOps for Managers; LFEL1002 Getting Started with Rust; LFEL1004 Authentication and Authorization Web/API; LFC108 Cybersecurity Essentials; LFD125 Security for Software Dev. Managers",
+    "Cisco (2024–2026): Introduction to Cybersecurity; Networking Basics; Networking Devices and Initial Configuration; Endpoint Security",
+    "AWS: Academy Graduate — Cloud Foundations (2025)",
+    "CertiProf: Cybersecurity Awareness CAPC (2024)",
+    "Dio.me: Bootcamp Linux from Scratch (2023)",
+    "PUC Minas: Projeto Acadêmico Premiado — PUC Caronas (2024)"
+  ],
+  "skills": {
+    "appsec_devsecops": ["SAST", "DAST", "SCA", "RASP", "CI/CD com GitHub Actions", "Docker", "Docker Compose", "CodeQL", "SonarQube", "Trivy", "OWASP ZAP", "Nikto", "Aqua Security", "GitHub Advanced Security"],
+    "frameworks_padroes": ["OWASP Top 10", "OWASP SAMM", "NIST CSF 2.0", "NIST SP 800-218 (SSDF)", "GRC"],
+    "monitoramento_inteligencia": ["Cyberint", "BlackKite", "Burp Suite", "Monitoramento de Logs"],
+    "linguagens": ["JavaScript", "TypeScript", "Python", "Java", "C/C++", "Rust", "HTML", "CSS", "Bash"],
+    "infraestrutura": ["Linux", "Nginx", "MySQL", "Ansible", "AWS Cloud Foundations", "Azure"],
+    "idiomas": ["Português (Nativo)", "Inglês (Avançado)"]
+  },
   "projects": [
     {
-      "title": "projeto 1",
-      "description": "Plataforma para logística e monitoramento de sensores em tempo real.",
-      "tags": ["IoT", "Docker", "GitHub Actions"],
-      "link": "https://github.com/"
+      "title": "TI2 SensorFix",
+      "description": "Plataforma de logística IoT para monitoramento de sensores em tempo real com pipeline de segurança incluindo CodeQL, OWASP e Semgrep.",
+      "tags": ["IoT", "React", "Docker", "GitHub Actions", "CodeQL", "Semgrep"],
+      "link": "https://github.com/jjoaom/TI2-PUCMG-SensorFix"
     },
     {
-      "title": "projeto 2",
-      "description": "E-commerce",
-      "tags": ["E-commerce", "Java", "SonarQube"],
-      "link": "https://github.com/j"
+      "title": "TI3 PontoCerto",
+      "description": "Plataforma de e-commerce com infraestrutura containerizada e deploy no Azure, protegida com SonarQube e Snyk.",
+      "tags": ["E-commerce", "Java", "Docker", "Azure", "SonarQube", "Snyk"],
+      "link": "https://github.com/jjoaom/TI3-PUCMG-PontoCerto"
     },
     {
-      "title": "projeto 3",
-      "description": "Aplicativo mobile de sustentabilidade",
-      "tags": ["Flutter", "Qodana", "CI/CD", "Android"],
-      "link": "https://github.com/"
+      "title": "TI4 Animongs",
+      "description": "Aplicativo mobile de sustentabilidade com backend Kotlin/Spring Boot, frontend Flutter e pipeline DevSecOps completo.",
+      "tags": ["Flutter", "Kotlin", "Spring Boot", "Docker", "Trivy", "Qodana", "Semgrep", "GitHub Actions"],
+      "link": "https://github.com/jjoaom/TI4-ANIMONGS"
     }
   ],
   "contact": {
-    "message": "Aberto a oportunidades em Backend, Frontend e Engenharia de Software.",
-    "email": "joao@email.com",
-    "linkedin": "https://linkedin.com/in/joao",
-    "github": "https://github.com/joao"
+    "message": "Aberto a oportunidades em AppSec, DevSecOps e Engenharia de Software.",
+    "email": "joaomarcos.aquino@hotmail.com",
+    "phone": "+55 31 99325-6803",
+    "linkedin": "https://linkedin.com/in/jjoaom",
+    "github": "https://github.com/jjoaom"
   }
 }
